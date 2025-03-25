@@ -5,7 +5,6 @@ from pathlib import Path
 
 class ConfigManager:
     def __init__(self, base_dir):
-        # Set up config directory
         self.config_dir = Path(base_dir).parent / "configs"
         self.config_dir.mkdir(exist_ok=True)
         self.global_config_path = self.config_dir / "global.json"
@@ -23,7 +22,7 @@ class ConfigManager:
             with open(self.global_config_path, 'w') as f:
                 json.dump(default_config, f, indent=2)
                 
-    def get_app_config(self, app_name, env="dev"):
+    def get_app_config(self, app_name, env_name="dev"):
         """Get config for an app and environment"""
         config_file = self.config_dir / f"{app_name}.json"
         if not config_file.exists():
@@ -32,7 +31,7 @@ class ConfigManager:
         with open(config_file, 'r') as f:
             app_config = json.load(f)
             
-        return app_config.get(env, {})
+        return app_config.get(env_name, {})
     
     def create_app_config(self, app_name):
         """Create a new application configuration"""

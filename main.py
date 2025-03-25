@@ -8,13 +8,14 @@ from local_deployer import LocalDeployer
 
 # Set up base directory
 base_dir = Path(os.path.dirname(os.path.abspath(__file__)))
+home_dir = base_dir.parent
 
 @click.group()
 def cli():
     """HomeDeploy: CLI tool to deploy to NAS or Azure."""
     pass
 
-@cli.command()
+@cli.command(name="lets-fucking-go")
 @click.argument("app_name")
 @click.argument("app_path")
 @click.option("--env", "-e", default="dev", help="Environment (dev/stage/prod)")
@@ -31,13 +32,19 @@ def deploy_local(app_name, app_path, env):
     else:
         print("Deployment failed")
 
-@cli.command()
+@cli.command(name="lock-in")
 @click.argument("app_name")
 def configure_app(app_name):
     """Create or update app configuration."""
     config_manager = ConfigManager(base_dir)
     config_manager.create_app_config(app_name)
     print(f"Configuration created for {app_name}")
+    
+    
+@cli.command(name="chat-am-i-cooked")
+def view_deployment_logs():
+    """View deployments logs of an app deployment"""
+    print("cooked")
 
 @cli.command()
 def list_deployments():
@@ -61,9 +68,8 @@ def list_deployments():
                     print(f"  - {env_name}")
 
 if __name__ == "__main__":
-    # Create required directories
-    (base_dir / "configs").mkdir(exist_ok=True)
-    (base_dir / "deployments").mkdir(exist_ok=True)
-    (base_dir / "logs").mkdir(exist_ok=True)
+    (home_dir / "configs").mkdir(exist_ok=True)
+    (home_dir / "deployments").mkdir(exist_ok=True)
+    (home_dir / "logs").mkdir(exist_ok=True)
     
     cli()
