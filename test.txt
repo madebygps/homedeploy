@@ -1,0 +1,13 @@
+Deploy my FastAPI application called "CustomerAPI".
+Use the Python 3.9 base image.
+The app requires 1 CPU and 2GB of memory.
+Map the API's port 8000 to external port 8080.
+Set up a volume from /mnt/nas/customer-data to /app/data.
+Add another volume from /mnt/nas/api-logs to /app/logs.
+Use environment variables:
+DATABASE_URL=postgresql://user:password@db:5432/customers
+LOG_LEVEL=INFO
+CORS_ORIGINS=http://localhost:3000,https://myapp.local
+The API should automatically restart on failure.
+Deploy to my TrueNAS server.
+Don't enable automatic updates.
